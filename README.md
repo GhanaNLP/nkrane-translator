@@ -1,4 +1,4 @@
-# TC Translator (Terminology-Controlled Translator)
+# TC Translate (Terminology-Controlled Translation System)
 
 A Python package that extends Google Translate with terminology control.  It first substitutes domain-specific terms with IDs, translates the  text, then replaces the IDs with approved translations.
 
@@ -82,7 +82,7 @@ id,term,translation
 
 ## Language Code Support
 
-TC Translator supports both 3-letter (ISO 639-3) and 2-letter (ISO 639-1)  language codes. The system automatically converts between them:
+TC Translate supports both 3-letter (ISO 639-3) and 2-letter (ISO 639-1)  language codes. The system automatically converts between them:
 
 ### Using 3-letter codes:
 
