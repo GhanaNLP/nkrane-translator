@@ -14,7 +14,7 @@ A Python package that extends Google Translate with terminology control.  It fir
 bash
 
 ```
-git clone https://github.com/yourusername/tc-translate.git
+git clone https://github.com/GhanaNLP/tc-translate.git
 cd tc-translate
 pip install -e .
 ```
@@ -26,7 +26,7 @@ Or install directly:
 bash
 
 ```
-pip install git+https://github.com/yourusername/tc-translate.git
+pip install git+https://github.com/GhanaNLP/tc-translate.git
 ```
 
 
