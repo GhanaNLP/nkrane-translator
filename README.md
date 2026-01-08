@@ -5,41 +5,33 @@ A Python package that extends Google Translate with terminology control and augm
 ## Features
 
 - Supports using your own translations for specific vocabulary
-- Translation to english, twi and ewe using augmented input to imporve the quality of translation
+- Translation to English, Twi, Ewe and other Ghanaian languages using augmented input to improve translation quality
+- Simple terminology management with a single CSV file per language
+- Two-step translation process (English → Thai → Target Language) for better accuracy
 
 ## Installation
 
-bash
-
-```
-git clone https://github.com/GhanaNLP/ghana-translator.git
+```bash
+git clone https://github.com/GhanaNLP/ghana-translator.git 
 cd ghana-translator
 pip install -e .
 ```
 
-
-
 Or install directly:
 
-bash
-
+```bash
+pip install git+https://github.com/GhanaNLP/ghana-translator.git 
 ```
-pip install git+https://github.com/GhanaNLP/ghana-translator.git
-```
-
-
 
 ## Quick Start
 
-python
-
-```
+```python
 import asyncio
-from tc_translate import TCTranslator
+from ghana_translator import TCTranslator
 
 async def main():
-    translator = TCTranslator(domain='agric', target_lang='ak') # or use target_lang='ee' for Ewe and target_lang='gaa' for Ga
-    result = await translator._translate_async("The farmer uses an abattoir and acreage for farming.")
+    translator = TCTranslator(target_lang='ak')  # 'ak' is the Google code for Twi
+    result = await translator._translate_async("Please bring me some food from the kitchen.")
     print(result['text'])
 
 # In Jupyter/Colab
@@ -49,66 +41,104 @@ await main()
 # asyncio.run(main())
 ```
 
-
-
-## More Examples
-
-For more comprehensive examples and usage patterns, see our [Google Colab Notebook](https://colab.research.google.com/drive/1xi6KXJXHB9F-zT-_6g23-YAUzDclyexP?usp=sharing).
-
-The notebook includes:
-
-- Side-by-side comparison of direct vs terminology-controlled translation
-- Batch translation examples
-- How to add your own terminology files
-- Working with different domains and languages
-
 ## Terminology Files
 
-Add your terminology CSV files in the `terminologies/` directory with naming convention:
-`{domain}_terms_{language}.csv`
+Create a terminology CSV file in the repository root directory with the naming convention:
+`terminologies_{language}.csv`
 
 CSV format:
-
-csv
-
-```
+```csv
 id,term,translation
 1,abattoir,aboa kum fie
 2,aboiteau,nsu ban ɔkwan
+3,kitchen,εbεso
 ...
 ```
 
+### Example terminology files:
+- `terminologies_twi.csv` - for Twi terminology
+- `terminologies_ewe.csv` - for Ewe terminology  
+- `terminologies_ak.csv` - for Akan terminology (using Google's language code)
+
 ## Language Code Support
 
-TC Translate supports both 3-letter (ISO 639-3) and 2-letter (ISO 639-1)  language codes. The system automatically converts between them:
+Ghana Translator supports both 3-letter (ISO 639-3) and 2-letter (ISO 639-1) language codes. The system automatically converts between them:
 
-### Using 3-letter codes:
-
-python
-
+### Using original language names:
+```python
+# Your terminology file: terminologies_twi.csv
+translator = TCTranslator(target_lang='twi')
 ```
-# Your terminology files: agric_terms_twi.csv
-translator = TCTranslator(domain='agric', target_lang='twi')
-```
-
-
 
 ### Using 2-letter Google codes:
-
-python
-
-```
+```python
 # Same terminology file, but using Google's code
-translator = TCTranslator(domain='agric', target_lang='ak')
+translator = TCTranslator(target_lang='ak')  # 'ak' is Google's code for Akan/Twi
 ```
 
+### Supported Language Codes:
+- `twi` or `ak` - Twi/Akan
+- `ewe` or `ee` - Ewe
+- `gaa` - Ga
+- `dag` - Dagbani
+- `fan` - Fante
+- And many more Ghanaian languages
 
+## Advanced Usage
 
-### Terminology File Naming:
+### Using a custom terminology file location:
+```python
+translator = TCTranslator(
+    target_lang='twi',
+    terminology_csv='path/to/your/terminologies_twi.csv'
+)
+```
 
-Name your terminology files using either format:
+### Getting detailed translation information:
+```python
+result = translator.translate("The farmer works on the farm.")
+print(f"Original: {result['original']}")
+print(f"Translation: {result['text']}")
+print(f"Intermediate Thai: {result['intermediate_thai']}")
+print(f"Terms replaced: {result['replacements_count']}")
+```
 
-- `{domain}_terms_{3-letter-code}.csv` (e.g., `agric_terms_twi.csv`)
-- `{domain}_terms_{2-letter-code}.csv` (e.g., `agric_terms_ak.csv`)
+### Batch translation:
+```python
+texts = ["Hello world", "Good morning", "Thank you"]
+results = translator.batch_translate_sync(texts)
+for text, result in zip(texts, results):
+    print(f"{text} → {result['text']}")
+```
 
-The system will automatically detect and convert between codes as needed.
+## Creating Terminology Files
+
+1. Create a CSV file named `terminologies_{language}.csv` in your repository root
+2. Include columns: `id`, `term`, `translation`
+3. Add your terminology mappings
+4. The translator will automatically use these terms during translation
+
+Example `terminologies_twi.csv`:
+```csv
+id,term,translation
+1,farm,farm
+2,farmer,ɔbarima a ɔyɛ adwuma wɔ farm no so
+3,abattoir,aboa kum fie
+4,acreage,asase kɛse
+```
+
+## CLI Usage
+
+You can also use the command line interface:
+
+```bash
+# List available languages and their terminology files
+ghana-translator list
+
+# Translate text using terminology
+ghana-translator translate "The farmer uses modern equipment" --target twi
+
+# Export terminology to JSON
+ghana-translator export twi
+```
+```
