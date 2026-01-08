@@ -7,7 +7,6 @@ A Python package that extends Google Translate with terminology control and augm
 - Supports using your own translations for specific vocabulary
 - Translation to English, Twi, Ewe and other Ghanaian languages using augmented input to improve translation quality
 - Simple terminology management with a single CSV file per language
-- Two-step translation process (English → Thai → Target Language) for better accuracy
 
 ## Installation
 
