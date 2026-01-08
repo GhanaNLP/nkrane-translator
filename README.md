@@ -1,13 +1,11 @@
-# TC Translate (Terminology-Controlled Translation System)
+# Ghana Translator
 
-A Python package that extends Google Translate with terminology control.  It first substitutes domain-specific terms with IDs, translates the  text, then replaces the IDs with approved translations.
+A Python package that extends Google Translate with terminology control and augmentation to enhance translation quality.  
 
 ## Features
 
-- Domain-specific terminology control
-- Support for multiple languages and domains
-- Automatic terminology detection from CSV files
-- Async/await support for better performance
+- Supports using your own translations for specific vocabulary
+- Translation to english, twi and ewe using augmented input to imporve the quality of translation
 
 ## Installation
 
