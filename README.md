@@ -97,19 +97,6 @@ for r in results:
     print(f"{r['original']} -> {r['text']}")
 ```
 
----
-
-## 🔧 Supported Languages
-
-### Target Languages (Built-in Dictionaries)
-
-| Code | Language | Terms Available |
-|------|----------|----------------|
-| `ak` | Akan (Twi) | 400,000+ |
-
-### Source Languages
-
-Any language supported by Google Translate (English, French, Spanish, etc.)
 
 ---
 
