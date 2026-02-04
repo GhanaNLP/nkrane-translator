@@ -86,8 +86,8 @@ Mepɛ sɛ metɔ efie ne kaa.
 # Create custom CSV
 cat > my_terms.csv << EOF
 text,translation
-house,ofie
-car,ntentan
+house,efie
+car,kar
 school,sukuu
 EOF
 
