@@ -1,15 +1,15 @@
-# Nkrane-GT: Enhanced Machine Translation with Terminology Control
+# Nkrane: Enhanced Machine Translation with Terminology Control
 
 [![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Nkrane-GT ("Nkrane - Google Translate") is a Python library that enhances Google Translate with **terminology control** for low-resource languages, with a focus on Ghanaian and African languages.
+Nkrane - Google Translate (nkrane-gt) is a Python library that enhances the googletrans python library with terminology control for low-resource languages, with a focus on Ghanaian and African languages.
 
 It solves the problem of inconsistent translations for critical terms by allowing you to enforce specific translations for nouns and noun phrases while letting Google Translate handle the grammatical structure.
 
 ---
 
-## 🌍 Why Nkrane-GT?
+## 🌍 Why Nkrane?
 
 Standard machine translation often struggles with:
 - **Inconsistent terminology** - The same word translated differently in different contexts
@@ -17,7 +17,7 @@ Standard machine translation often struggles with:
 - **Domain-specific vocabulary** - Technical, medical, or legal terms poorly handled
 - **Low-resource languages** - Limited training data for African languages
 
-**Nkrane-GT solves this by:**
+**Nkrane solves this by:**
 1. Extracting noun phrases from source text using NLP (spaCy)
 2. Matching them against your terminology dictionary
 3. Replacing content words with placeholders
@@ -31,7 +31,7 @@ Standard machine translation often struggles with:
 | Feature | Description |
 |---------|-------------|
 | **Terminology Control** | Enforce specific translations for key terms |
-| **Built-in Dictionaries** | Pre-loaded with 860K+ terms for Akan (Twi), Ewe, and Ga |
+| **Built-in Dictionaries** | Pre-loaded with 400K+ terms for Akan (Twi) |
 | **Stopword Handling** | Intelligently leaves stopwords ("a", "the", "of") for natural translation |
 | **Case Preservation** | Matches capitalization of original text |
 | **Custom Dictionaries** | Load your own CSV terminology files |
@@ -73,7 +73,26 @@ translator = NkraneTranslator(target_lang='ak')
 # Translate
 result = translator.translate("I want to buy a house and a car.")
 print(result['text'])
-# Output: "ME pɛ sɛ wotɔ ofie ne kar."
+# Output: "Me pɛ sɛ metɔ efie ne kar."
+INFO:nkrane_gt.translator:Terminology loaded: 446281 total terms (446281 built-in, 0 user)
+
+Mepɛ sɛ metɔ efie ne kaa.
+{
+  "text": "Mepɛ sɛ metɔ efie ne kaa.",
+  "src": "en",
+  "dest": "ak",
+  "original": "I want to buy a house and a car.",
+  "preprocessed": "I want to buy a <2> and a <1>.",
+  "google_translation": "Mepɛ sɛ metɔ <2> ne <1>.",
+  "replacements_count": 2,
+  "src_google": "en",
+  "dest_google": "ak",
+  "replaced_terms": [
+    "<1>",
+    "<2>"
+  ],
+  "translation_time": 0.6670994758605957
+}
 ```
 
 ### With Custom Terminology
@@ -119,9 +138,7 @@ for r in results:
 
 | Code | Language | Terms Available |
 |------|----------|----------------|
-| `ak` | Akan (Twi) | 860,000+ |
-| `ee` | Ewe | 860,000+ |
-| `gaa` | Ga | 860,000+ |
+| `ak` | Akan (Twi) | 400,000+ |
 
 ### Source Languages
 
@@ -142,18 +159,18 @@ Input: "I want to buy a house."
    → Skips pronouns: "I" ignored
          ↓
 2. Dictionary Matching
-   → "house" in dictionary? ✓ → "ofie"
+   → "house" in dictionary? ✓ → "efie"
          ↓
 3. Preprocessing
    → "I want to buy <1>."
          ↓
 4. Google Translate
-   → "ME pɛ sɛ wotɔ <1>."
+   → "Me pɛ sɛ metɔ <1>."
          ↓
 5. Postprocessing (case-matched)
-   → "ME pɛ sɛ wotɔ ofie."
+   → "Me pɛ sɛ metɔ ofie."
          ↓
-Output: "ME pɛ sɛ wotɔ ofie."
+Output: "Me pɛ sɛ metɔ ofie."
 ```
 
 ### Key Innovations
@@ -246,14 +263,14 @@ nkrane-gt/
 
 ## 📖 Citation
 
-If you use Nkrane-GT in your research, please cite:
+If you use Nkrane in your research, please cite:
 
 ```bibtex
 @software{nkrane_gt,
-  title={Nkrane-GT: Enhanced Machine Translation with Terminology Control},
-  author={Your Name},
-  year={2024},
-  url={https://github.com/yourusername/nkrane-gt}
+  title={Nkrane: Enhanced Machine Translation with Terminology Control},
+  author={GhanaNLP},
+  year={2026},
+  url={https://github.com/ghananlp/nkrane-gt}
 }
 ```
 
@@ -266,8 +283,6 @@ Contributions welcome! Areas of interest:
 - Improved noun phrase extraction
 - Domain-specific terminology packs
 - Performance optimizations
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ---
 
@@ -283,11 +298,11 @@ MIT License - see [LICENSE](LICENSE) file.
 - Uses [spaCy](https://spacy.io/) for NLP processing
 - Inspired by the need for better African language translation tools
 
-**"Nkrane"** means "translation" or "interpreter" in Akan/Twi.
+**"Nkrane"** means "termites" in Akan/Twi.
 
 ---
 
 ## 📧 Contact
 
 - Issues: [GitHub Issues](https://github.com/yourusername/nkrane-gt/issues)
-- Email: your.email@example.com
+- Email: natural.language.processing.gh@gmail.com
