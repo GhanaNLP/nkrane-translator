@@ -53,6 +53,9 @@ python -m spacy download en_core_web_sm
 ### Step 1: Create Your Terminology CSV
 
 Create a CSV file with your preferred translations:
+Supported header names:
+- **Source**: `text`, `english`, `source`, `term`, `word`
+- **Target**: `text_translated`, `translation`, `target`, `translated`
 
 ```bash
 text,text_translated
@@ -149,45 +152,6 @@ Output: "Gyinabea no wɔ Accra."
 ---
 
 ## 🛠️ Advanced Usage
-
-### Custom Terminology Format
-
-Your CSV can use various column headers (auto-detected):
-
-**Option 1: Standard headers**
-```csv
-text,text_translated
-house,efie
-car,kaa
-```
-
-**Option 2: Alternative headers**
-```csv
-english,translation
-house,efie
-car,kaa
-```
-
-**Option 3: Any two columns**
-```csv
-source_term,target_term
-house,efie
-car,kaa
-```
-
-Supported header names:
-- **Source**: `text`, `english`, `source`, `term`, `word`
-- **Target**: `text_translated`, `translation`, `target`, `translated`
-
-### Multi-word Terms and Phrases
-
-```csv
-text,text_translated
-big house,efie kɛse
-small car,kaa ketewa
-middle lane,mfimfini kwan
-trading space,aguadibea
-```
 
 ### Detailed Translation Results
 
