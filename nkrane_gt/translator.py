@@ -20,17 +20,16 @@ class NkraneTranslator:
             target_lang: Target language code (e.g., 'ak', 'ee', 'gaa')
             src_lang: Source language code (default: 'en')
             terminology_source: Path to user's terminology CSV file (optional)
-            use_builtin: Whether to use built-in dictionary (default: True)
+            use_builtin: Whether to use built-in dictionary (default: True) - currently not used
         """
         self.target_lang = target_lang
         self.src_lang = src_lang
         self.use_builtin = use_builtin
 
-        # Initialize terminology manager
+        # Initialize terminology manager (simplified to match actual signature)
         self.terminology_manager = TerminologyManager(
             target_lang=target_lang,
-            user_csv_path=terminology_source,
-            use_builtin=use_builtin
+            user_csv_path=terminology_source
         )
 
         # Convert language codes to Google format
@@ -46,8 +45,7 @@ class NkraneTranslator:
 
         # Log terminology stats
         stats = self.terminology_manager.get_terms_count()
-        logger.info(f"Terminology loaded: {stats['total']} total terms "
-                   f"({stats['builtin']} built-in, {stats['user']} user)")
+        logger.info(f"Terminology loaded: {stats['total']} total terms")
 
     def _google_translate_sync(self, text: str) -> str:
         """
