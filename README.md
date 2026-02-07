@@ -2,12 +2,38 @@
 
 Enhanced machine translation with terminology control using Google Translate.
 
+## How It Works
+
+1. **Extract**: Identify noun phrases in your text
+2. **Match**: Check if they exist in your terminology
+3. **Replace**: Substitute matches with placeholders
+4. **Translate**: Send to Google Translate
+5. **Restore**: Replace placeholders with your translations
+
+## Supported Languages
+
+The default setup supports translation from **English** to any of the following Ghanaian languages which are supported by Google Translate.
+- `ak` - Akan/Twi
+- `ee` - Ewe
+- `gaa` - Ga
+
+
+
 ## Installation
 
 ```bash
-pip install requests spacy
-python -m spacy download en_core_web_sm
+# Clone the repository
+git clone https://github.com/ghananlp/nkrane-gt.git
+cd nkrane-gt
+
+# Install the package
+pip install -e .
 ```
+
+This will automatically:
+- Install all dependencies (requests, spacy)
+- Download the spaCy English model
+- Set up the `nkrane-translate` command
 
 ## Quick Start
 
@@ -25,7 +51,7 @@ want,pɛ
 
 **Command Line:**
 ```bash
-python translate.py "I want to buy a house" -t ak -c my_terms.csv
+nkrane-translate "I want to buy a house" -t ak -c my_terms.csv
 ```
 
 **Python:**
@@ -43,19 +69,19 @@ print(result['text'])  # Mepɛ sɛ metɔ efie
 
 ```bash
 # Translate text
-python translate.py "TEXT" -t TARGET_LANG -c TERMS.csv
+nkrane-translate "TEXT" -t TARGET_LANG -c TERMS.csv
 
 # Translate from file
-python translate.py -f input.txt -t TARGET_LANG -c TERMS.csv -o output.txt
+nkrane-translate -f input.txt -t TARGET_LANG -c TERMS.csv -o output.txt
 
 # Debug mode (show substitutions)
-python translate.py "TEXT" -t TARGET_LANG -c TERMS.csv --debug
+nkrane-translate "TEXT" -t TARGET_LANG -c TERMS.csv --debug
 
 # Without terminology (direct Google Translate)
-python translate.py "TEXT" -t TARGET_LANG
+nkrane-translate "TEXT" -t TARGET_LANG
 
 # Quiet mode (only output translation)
-python translate.py "TEXT" -t TARGET_LANG -c TERMS.csv -q
+nkrane-translate "TEXT" -t TARGET_LANG -c TERMS.csv -q
 ```
 
 ### Arguments
@@ -74,48 +100,48 @@ python translate.py "TEXT" -t TARGET_LANG -c TERMS.csv -q
 
 ```bash
 # Basic translation
-python translate.py "I want to buy a house" -t ak -c terms.csv
+nkrane-translate "I want to buy a house" -t ak -c terms.csv
 
 # See what terms were substituted
-python translate.py "I want to buy a house and a car" -t ak -c terms.csv --debug
+nkrane-translate "I want to buy a house and a car" -t ak -c terms.csv --debug
 
 # Batch translate a file
-python translate.py -f input.txt -t ak -c terms.csv -o output.txt
+nkrane-translate -f input.txt -t ak -c terms.csv -o output.txt
 
 # Direct translation without terminology
-python translate.py "Hello world" -t ak
+nkrane-translate "Hello world" -t ak
 
 # Just the translation output
-python translate.py "I want a house" -t ak -c terms.csv -q
+nkrane-translate "I want a house" -t ak -c terms.csv -q
 ```
 
 ### Debug Mode Output
 
 ```bash
-$ python translate.py "I want to buy a house" -t ak -c terms.csv --debug
+$ nkrane-translate "I want to buy a house" -t ak -c terms.csv --debug
 
 ============================================================
 🔍 DEBUG MODE
 ============================================================
 
-📝 Original text:
+Original text:
    I want to buy a house
 
-🔄 Preprocessed text (with placeholders):
+Preprocessed text (with placeholders):
    I <0> to <1> <2>
 
-📋 Term substitutions (3):
+Term substitutions (3):
    <0> → 'pɛ' (was: 'want')
    <1> → 'tɔ' (was: 'buy')
    <2> → 'efie' (was: 'house')
 
-🌐 Google translation (with placeholders):
+Google translation (with placeholders):
    Mepɛ sɛ metɔ efie
 
-✅ Final translation:
+Final translation:
    Mepɛ sɛ metɔ efie
 
-⏱️  Translation time: 0.85s
+Translation time: 0.85s
 ============================================================
 ```
 
@@ -129,8 +155,8 @@ from nkrane_gt import NkraneTranslator
 # Initialize translator
 translator = NkraneTranslator(
     target_lang='ak',
-    src_lang='en',              # optional, default: 'en'
-    terminology_source='my_terms.csv'  # optional
+    src_lang='en',                        # optional, default: 'en'
+    terminology_source='my_terms.csv'     # optional
 )
 
 # Translate
@@ -205,15 +231,6 @@ car,kaa
 
 All formats work the same.
 
-## Supported Languages
-
-**Ghanaian Languages:**
-- `ak` - Akan/Twi
-- `ee` - Ewe
-- `gaa` - Ga
-
-- Plus all Google Translate supported languages
-
 ## Result Dictionary
 
 ```python
@@ -230,21 +247,7 @@ All formats work the same.
 }
 ```
 
-## How It Works
-
-1. **Extract**: Identify noun phrases in your text
-2. **Match**: Check if they exist in your terminology
-3. **Replace**: Substitute matches with placeholders
-4. **Translate**: Send to Google Translate
-5. **Restore**: Replace placeholders with your translations
-
-
 ## Troubleshooting
-
-**spaCy model not found:**
-```bash
-python -m spacy download en_core_web_sm
-```
 
 **Terms not being substituted:**
 - Use `--debug` to see what's happening
@@ -254,6 +257,12 @@ python -m spacy download en_core_web_sm
 **Translation timeout:**
 - Default timeout is 30 seconds
 - Check your internet connection
+
+**spaCy model error (rare):**
+If the automatic download failed during installation, run manually:
+```bash
+python -m spacy download en_core_web_sm
+```
 
 ## License
 
