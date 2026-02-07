@@ -12,7 +12,9 @@ Enhanced machine translation with terminology control using Google Translate.
 
 ## Supported Languages
 
-The default setup supports translation from **English** to any of the following Ghanaian languages which are supported by Google Translate.
+The supported source language:
+- `en` - English
+The supported target languages:
 - `ak` - Akan/Twi
 - `ee` - Ewe
 - `gaa` - Ga
